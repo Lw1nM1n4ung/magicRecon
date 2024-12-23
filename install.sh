@@ -1,19 +1,19 @@
 #!/bin/bash
 
-. ./configuration.cfg
+source ./configuration.cfg
 
 printf "${BOLD}${YELLOW}##########################################################\n"
 printf "##### Welcome to the MagicRecon dependency installer #####\n"
 printf "##########################################################\n\n${NORMAL}"
 
-sudo apt-get -y update
+sudo apt update -y
 
 printf "${BOLD}${MAGENTA}Installing programming languages\n${NORMAL}"
  
 printf "${CYAN}Installing Python\n${NORMAL}"
-sudo apt-get install -y python3-pip
-sudo apt-get install -y python-pip
-sudo apt-get install -y dnspython
+
+sudo apt install -y python3-pip
+pip3 install dnspython
 
 printf "${CYAN}Installing GO\n\n${NORMAL}"
 sudo apt install -y golang
@@ -24,6 +24,12 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 echo "export GOROOT=/usr/lib/go" >> ~/.bashrc
 echo "export GOPATH=~/go" >> ~/.bashrc
 echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH" >> ~/.bashrc
+
+#############Python Env###############
+mkdir ~/python_By_magic_recon/
+python3 -m venv ~/.python_By_magic_recon/.venv
+source ~/.python_By_magic_recon/.venv/bin/activate
+echo "source ~/.python_By_magic_recon/.venv/bin/activate" >> ~/.bashrc
 
 source ~/.bashrc
 
@@ -37,7 +43,6 @@ printf "${BOLD}${MAGENTA}Installing repositories\n${NORMAL}"
 cd $HOME
 mkdir tools
 cd tools
-
 printf "${CYAN}Cloning ASNLookup\n${NORMAL}"
 git clone https://github.com/yassineaboukir/Asnlookup
 cd Asnlookup
@@ -123,83 +128,101 @@ cd ..
 printf "${BOLD}${MAGENTA}Installing tools\n${NORMAL}"
 
 printf "${CYAN}Installing WhatWeb\n\n${NORMAL}"
-sudo apt-get install whatweb
+sudo apt install whatweb
 
 printf "${CYAN}Installing TheHarvester\n\n${NORMAL}"
-sudo apt-get install theharvester
+sudo apt install theharvester
 
 printf "${CYAN}Installing Nmap\n\n${NORMAL}"
-sudo apt-get install nmap
+sudo apt install nmap
 
 printf "${CYAN}Installing Dirsearch\n\n${NORMAL}"
-sudo apt-get install dirsearch
+sudo apt install dirsearch
 
 printf "${CYAN}Installing SqlMap\n\n${NORMAL}"
-sudo apt-get install sqlmap 
+sudo apt install sqlmap 
 
-printf "${CYAN}Installing Amass\n${NORMAL}"
-go get -v github.com/OWASP/Amass/v3/..
-sudo cp ~/go/bin/amass /usr/local/bin 
 
-printf "${CYAN}Installing Aquatone\n${NORMAL}"
-go get -u github.com/michenriksen/aquatone
-sudo cp ~/go/bin/aquatone /usr/local/bin 
+# Install Amass
+printf "${CYAN}Installing Amass...${NORMAL}\n"
+go install github.com/OWASP/Amass/v3/cmd/amass@latest
+sudo cp ~/go/bin/amass /usr/local/bin
 
-printf "${CYAN}Installing Subfinder\n${NORMAL}"
-GO111MODULE=on go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
-sudo cp ~/go/bin/subfinder /usr/local/bin 
+# Install Aquatone
+printf "${CYAN}Installing Aquatone...${NORMAL}\n"
+go install github.com/michenriksen/aquatone@latest
+sudo cp ~/go/bin/aquatone /usr/local/bin
 
-printf "${CYAN}Installing Hakrawler\n${NORMAL}"
+# Install Subfinder
+printf "${CYAN}Installing Subfinder...${NORMAL}\n"
+go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+sudo cp ~/go/bin/subfinder /usr/local/bin
+
+# Install Hakrawler
+printf "${CYAN}Installing Hakrawler...${NORMAL}\n"
 go install github.com/hakluke/hakrawler@latest
-sudo cp ~/go/bin/hakrawler /usr/local/bin 
+sudo cp ~/go/bin/hakrawler /usr/local/bin
 
-printf "${CYAN}Installing anew\n${NORMAL}"
-go get -u github.com/tomnomnom/anew
-sudo cp ~/go/bin/anew /usr/local/bin 
+# Install anew
+printf "${CYAN}Installing Anew...${NORMAL}\n"
+go install github.com/tomnomnom/anew@latest
+sudo cp ~/go/bin/anew /usr/local/bin
 
-printf "${CYAN}Installing HTTPX\n${NORMAL}"
-GO111MODULE=on go get -v github.com/projectdiscovery/httpx/cmd/httpx
+# Install HTTPX
+printf "${CYAN}Installing HTTPX...${NORMAL}\n"
+go install github.com/projectdiscovery/httpx/cmd/httpx@latest
 sudo cp ~/go/bin/httpx /usr/local/bin
 
-printf "${CYAN}Installing Notify\n${NORMAL}"
-GO111MODULE=on go get -v github.com/projectdiscovery/notify/cmd/notify
+# Install Notify
+printf "${CYAN}Installing Notify...${NORMAL}\n"
+go install github.com/projectdiscovery/notify/cmd/notify@latest
 sudo cp ~/go/bin/notify /usr/local/bin
 
-printf "${CYAN}Installing Nuclei\n${NORMAL}"
-GO111MODULE=on go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+# Install Nuclei
+printf "${CYAN}Installing Nuclei...${NORMAL}\n"
+go install github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 sudo cp ~/go/bin/nuclei /usr/local/bin
 
-printf "${CYAN}Installing Shcheck\n${NORMAL}"
+# Install Shcheck
+printf "${CYAN}Installing Shcheck...${NORMAL}\n"
 git clone https://github.com/santoru/shcheck
 
-printf "${CYAN}Installing MailSpoof\n${NORMAL}"
+# Install MailSpoof (using pip3 for Python-based tools)
+printf "${CYAN}Installing MailSpoof...${NORMAL}\n"
 sudo pip3 install mailspoof
 
-printf "${CYAN}Installing MailSpoof\n${NORMAL}"
-go get github.com/haccer/subjack
+# Install Subjack
+printf "${CYAN}Installing Subjack...${NORMAL}\n"
+go install github.com/haccer/subjack@latest
 sudo cp ~/go/bin/subjack /usr/local/bin
 
-printf "${CYAN}Installing gau\n${NORMAL}"
-GO111MODULE=on go get -u -v github.com/lc/gau
+# Install gau
+printf "${CYAN}Installing gau...${NORMAL}\n"
+go install github.com/lc/gau@latest
 sudo cp ~/go/bin/gau /usr/local/bin
 
-printf "${CYAN}Installing gf\n${NORMAL}"
-go get -u github.com/tomnomnom/gf
+# Install gf
+printf "${CYAN}Installing gf...${NORMAL}\n"
+go install github.com/tomnomnom/gf@latest
 echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
 cp -r $GOPATH/src/github.com/tomnomnom/gf/examples ~/.gf
 sudo cp ~/go/bin/gf /usr/local/bin
 
-printf "${CYAN}Installing qsreplace\n${NORMAL}"
-go get -u github.com/tomnomnom/qsreplace
+# Install qsreplace
+printf "${CYAN}Installing qsreplace...${NORMAL}\n"
+go install github.com/tomnomnom/qsreplace@latest
 sudo cp ~/go/bin/qsreplace /usr/local/bin
 
-printf "${CYAN}Installing Dalfox\n${NORMAL}"
-GO111MODULE=on go get -v github.com/hahwul/dalfox/v2
+# Install Dalfox
+printf "${CYAN}Installing Dalfox...${NORMAL}\n"
+go install github.com/hahwul/dalfox/v2@latest
 sudo cp ~/go/bin/dalfox /usr/local/bin
 
-printf "${CYAN}Installing html-tool\n${NORMAL}"
-go get -u github.com/tomnomnom/hacks/html-tool
+# Install html-tool
+printf "${CYAN}Installing html-tool...${NORMAL}\n"
+go install github.com/tomnomnom/hacks/html-tool@latest
 sudo cp ~/go/bin/html-tool /usr/local/bin
 
-printf "${CYAN}Installing waybackurls\n${NORMAL}"
-go get github.com/tomnomnom/waybackurls
+# Install waybackurls
+printf "${CYAN}Installing waybackurls...${NORMAL}\n"
+go install github.com/tomnomnom/waybackurls@latest
